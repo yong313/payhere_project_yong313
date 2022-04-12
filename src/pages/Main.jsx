@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 // 이미지 및 로고
 import { ReactComponent as GitHubLogo } from "../assets/github_logo.svg";
@@ -9,13 +9,14 @@ import Search from "../components/Search";
 import LeftBox from "../components/LeftBox";
 import RightBox from "../components/RightBox";
 
-function Main() {
+const Main = () => {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
       <HeadBox>
         <TitleBox>
           <GihubLogo>
-            <GitHubLogo />
+            <GitHubLogo fill="#fff" />
           </GihubLogo>
           <Text>
             자주 가는 GitHub의
@@ -24,18 +25,18 @@ function Main() {
           </Text>
         </TitleBox>
       </HeadBox>
-      <Search />
+      <Search setIsLoading={setIsLoading} />
       <ContentBox>
-        <LeftBox />
+        <LeftBox isLoading={isLoading} />
         <RightBox />
       </ContentBox>
     </>
   );
-}
+};
 
 const HeadBox = styled.div`
   width: 100%;
-  height: 33rem;
+  height: 30rem;
   background-image: url(${MainBackgroundTwo});
   background-repeat: no-repeat;
   background-size: contain;
@@ -61,9 +62,9 @@ const GihubLogo = styled.div`
 `;
 
 const Text = styled.h1`
-  line-height: 3.5rem;
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   font-weight: bold;
+  line-height: 3.2rem;
 `;
 
 const ContentBox = styled.div`

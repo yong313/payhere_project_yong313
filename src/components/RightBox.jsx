@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function RightBox() {
+const RightBox = () => {
   return (
     <>
       <Container>
@@ -9,7 +9,7 @@ function RightBox() {
       </Container>
     </>
   );
-}
+};
 
 const Container = styled.div`
   width: 49%;
