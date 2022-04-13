@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import RepositoryList from "./RepositoryList";
+import RepositoryList from "./SearchRepository";
 import Spinner from "./Spinner";
+import { useSelector } from "react-redux";
 
 const LeftBox = ({ isLoading }) => {
+  const titleColor = useSelector((state) => state.mainPage.searchList.length);
+
   return (
     <>
       <Container>
-        <Title>검색 Repository 🎉</Title>
+        <Title titleColor={titleColor}>검색 Repository 🎉</Title>
         <ListContainer>
-          {isLoading ? <Spinner /> : <RepositoryList isLoading={isLoading} />}
+          {isLoading ? <Spinner /> : <RepositoryList />}
         </ListContainer>
       </Container>
     </>
@@ -34,7 +37,7 @@ const Title = styled.div`
   margin-bottom: 20px;
   font-size: 2.2rem;
   font-weight: bold;
-  ${(props) => (props.titleColor ? "color: #717171" : "color: #ffffff")};
+  color: ${(props) => (props.titleColor ? "#ffffff" : "#424242")};
 `;
 
 const ListContainer = styled.div`

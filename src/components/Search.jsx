@@ -9,10 +9,10 @@ import { addSearchList, searchData } from "../modules/mainPage";
 const Search = ({ setIsLoading }) => {
   const [text, setText] = useState("");
   const searchValue = useRef(null);
+  const dispatch = useDispatch();
   const onChange = (e) => {
     setText(searchValue.current.value);
   };
-  const dispatch = useDispatch();
   function getData() {
     setIsLoading(true);
     const targetValue = searchValue.current.value;

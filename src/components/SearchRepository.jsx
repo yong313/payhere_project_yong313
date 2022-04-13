@@ -10,10 +10,9 @@ import {
   setOverlapModal,
 } from "../modules/mainPage";
 
-const RepositoryList = () => {
+const SearchRepositoty = () => {
   const targetRef = useRef(null);
   const dispatch = useDispatch();
-  // 수정
   const getSearchRepo = useSelector((state) => state.mainPage.searchList);
   const setGetSearchRepo = (data) => {
     dispatch(addSearchList(data));
@@ -69,7 +68,7 @@ const RepositoryList = () => {
                     idx + 10 === newMatchRepoList.length ? targetRef : undefined
                   }
                 >
-                  <GitHubLogo id="github_logo" width="16px" fill="#ccc" />
+                  <GitHubLogo id="github_logo" width="20px" fill="#ccc" />
                   <h1 className="repo_name">{el.repoName}</h1>
                 </LeftContain>
                 <RightContain>
@@ -98,6 +97,18 @@ const RepoListBox = styled.div`
   display: flex;
   padding: 0 15px;
   margin-bottom: 18px;
+  animation: fadeInRepoList 0.85s ease;
+
+  @keyframes fadeInRepoList {
+    from {
+      opacity: 0;
+      margin-bottom: 50px;
+    }
+    to {
+      opacity: 1;
+      margin-bottom: 18px;
+    }
+  }
 
   :hover {
     background-color: #fff;
@@ -131,6 +142,7 @@ const LeftContain = styled.div`
 
   .repo_name {
     margin-left: 8px;
+    padding-top: 4px;
     font-size: 1.8rem;
     font-weight: bold;
   }
@@ -160,4 +172,4 @@ const AddBtn = styled.button`
   }
 `;
 
-export default RepositoryList;
+export default SearchRepositoty;
