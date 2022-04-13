@@ -3,14 +3,13 @@ import styled from "styled-components";
 import RepositoryList from "./RepositoryList";
 import Spinner from "./Spinner";
 
-const LeftBox = (isLoading) => {
+const LeftBox = ({ isLoading }) => {
   return (
     <>
       <Container>
         <Title>검색 Repository 🎉</Title>
         <ListContainer>
-          <RepositoryList />
-          {isLoading ? null : <Spinner />}
+          {isLoading ? <Spinner /> : <RepositoryList isLoading={isLoading} />}
         </ListContainer>
       </Container>
     </>

@@ -61,7 +61,7 @@ const RepositoryList = () => {
         {getSearchRepo ? (
           <>
             {newMatchRepoList.map((el, idx) => (
-              <RepoListBox>
+              <RepoListBox key={idx}>
                 <LeftContain
                   className="left_contain"
                   key={idx}
