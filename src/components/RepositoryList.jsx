@@ -13,7 +13,7 @@ import {
 const RepositoryList = () => {
   const targetRef = useRef(null);
   const dispatch = useDispatch();
-
+  // 수정
   const getSearchRepo = useSelector((state) => state.mainPage.searchList);
   const setGetSearchRepo = (data) => {
     dispatch(addSearchList(data));
