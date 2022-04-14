@@ -2,8 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { counterData } from "../modules/mainPage";
-// 왜그래 정말
-const useIntersect = (targetRef, getSearchRepo, setGetSearchRepo) => {
+
+const useIntersect = (
+  targetRef,
+  getSearchRepo,
+  setGetSearchRepo,
+  setIsScrollLoading
+) => {
   const page = useSelector((state) => state.mainPage.pageCounter);
   const searchText = useSelector((state) => state.mainPage.searchString);
   const [showList, setShowList] = useState([]);
@@ -26,11 +31,11 @@ const useIntersect = (targetRef, getSearchRepo, setGetSearchRepo) => {
           const fullName = el.full_name.split("/");
           return { userID: fullName[0], repoName: fullName[1] };
         });
-
         setGetSearchRepo([...getSearchRepo, ...result]);
         dispatch(counterData());
       } catch (err) {
         console.log("더 이상 데이터 없음");
+        setIsScrollLoading(false);
       }
     })();
   };
@@ -39,10 +44,11 @@ const useIntersect = (targetRef, getSearchRepo, setGetSearchRepo) => {
     ([entry]) => {
       if (entry.isIntersecting) {
         console.log("데이터 추가 스크롤 시작");
+        setIsScrollLoading(true);
         getApiHandler(searchText, page);
       }
     },
-    [getApiHandler, page, searchText]
+    [getApiHandler, setIsScrollLoading, page, searchText]
   );
 
   useEffect(() => {

@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as GitHubLogo } from "../assets/github_logo.svg";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "./Spinner";
 import useIntersect from "../hooks/useIntersect";
+import { ReactComponent as GitHubLogo } from "../assets/github_logo.svg";
 import {
   addSearchList,
   searchAfterAdd,
@@ -11,6 +12,7 @@ import {
 } from "../modules/mainPage";
 
 const SearchRepositoty = () => {
+  const [scrollLoading, setIsScrollLoading] = useState(false);
   const targetRef = useRef(null);
   const dispatch = useDispatch();
   const getSearchRepo = useSelector((state) => state.mainPage.searchList);
@@ -21,7 +23,8 @@ const SearchRepositoty = () => {
   const newMatchRepoList = useIntersect(
     targetRef,
     getSearchRepo,
-    setGetSearchRepo
+    setGetSearchRepo,
+    setIsScrollLoading
   );
 
   const repoLength = useSelector((state) => state.mainPage.addRepo);
@@ -68,8 +71,14 @@ const SearchRepositoty = () => {
                     idx + 10 === newMatchRepoList.length ? targetRef : undefined
                   }
                 >
-                  <GitHubLogo id="github_logo" width="20px" fill="#ccc" />
-                  <h1 className="repo_name">{el.repoName}</h1>
+                  <div className="logo_box">
+                    <GitHubLogo id="github_logo" width="20px" fill="#ccc" />
+                  </div>
+                  <div className="repo_name_box">
+                    <h1 className="repo_name">
+                      {el.repoName} | <span>{el.userID}</span>
+                    </h1>
+                  </div>
                 </LeftContain>
                 <RightContain>
                   <AddBtn
@@ -83,6 +92,7 @@ const SearchRepositoty = () => {
                 </RightContain>
               </RepoListBox>
             ))}
+            {scrollLoading ? <Spinner scrollSpinner /> : null}
           </>
         ) : null}
       </InfinityScrollBox>
@@ -115,8 +125,18 @@ const RepoListBox = styled.div`
     color: #000;
     transition: all 0.35s ease;
 
-    > .left_contain > #github_logo {
+    > .left_contain > .logo_box > #github_logo {
       fill: #000;
+      transition: all 0.35s ease;
+    }
+
+    > .left_contain > .repo_name_box > .repo_name {
+      color: #00aaee;
+      transition: all 0.35s ease;
+    }
+
+    > .left_contain > .repo_name_box > .repo_name > span {
+      color: #000;
       transition: all 0.35s ease;
     }
   }
@@ -139,13 +159,23 @@ const LeftContain = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  
+  .logo_box {
+    width: 6%;
+  }
+
+  .repo_name_box {
+    width: 94%;
+  }
 
   .repo_name {
     margin-left: 8px;
-    padding-top: 4px;
+    padding-top: 3px;
     font-size: 1.8rem;
     font-weight: bold;
-  }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const RightContain = styled(LeftContain)`

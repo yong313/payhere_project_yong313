@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
+import Welcome from "./pages/Welcome";
 import Main from "./pages/Main";
 import Issue from "./pages/Issue";
 
@@ -12,7 +13,8 @@ function App() {
       <Wrapper>
         <Container>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Welcome />} />
+            <Route path="/main" element={<Main />} />
             <Route path="/issue" element={<Issue />} />
           </Routes>
         </Container>

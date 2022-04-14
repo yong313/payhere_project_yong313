@@ -9,7 +9,6 @@ const SelectRepository = ({
   handleAddClick,
   handleDltClick,
   selectRepo,
-  button,
   handleSetLocalStorage,
   targetRef,
 }) => {
@@ -20,14 +19,19 @@ const SelectRepository = ({
         ref={selectRepo ? null : targetRef}
       >
         <LeftContain>
-          <GitHubLogo id="github_logo" width="20px" fill="#000" />
-          <h1 className="repo_name">
-            {selectRepo ? `${repo.repoName}` : `${data.repoName}`}
-          </h1>
+          <div className="logo_box">
+            <GitHubLogo id="github_logo" width="20px" fill="#000" />
+          </div>
+          <div className="repo_name_box">
+            <h1 className="repo_name">
+              {selectRepo
+                ? `${repo.repoName} | ${repo.userID}`
+                : `${data.repoName} | ${data.userID}`}
+            </h1>
+          </div>
         </LeftContain>
         <RightContain>
           <DeleteBtn
-            className="add_btn"
             onClick={selectRepo ? handleDltClick : handleAddClick}
             id={id}
           >
@@ -48,6 +52,7 @@ const RepoListBox = styled.div`
   display: flex;
   padding: 0 15px;
   margin-bottom: 18px;
+  cursor: pointer;
   animation: fadeInRepoList 0.85s ease;
 
   @keyframes fadeInRepoList {
@@ -67,12 +72,26 @@ const LeftContain = styled.div`
   align-items: center;
   justify-content: flex-start;
 
+  .logo_box {
+    width: 6%;
+  }
+
+  .repo_name_box {
+    width: 94%;
+  }
+
   .repo_name {
     margin-left: 8px;
-    padding-top: 4px;
+    padding-top: 3px;
     font-size: 1.8rem;
     font-weight: bold;
-  }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    span {
+      color: red;
+    }
 `;
 
 const RightContain = styled(LeftContain)`

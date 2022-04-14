@@ -4,7 +4,13 @@ import { ReactComponent as SearchIcon } from "../assets/search_icon.svg";
 import axios from "axios";
 import { headers } from "../util/util";
 import { useDispatch } from "react-redux";
-import { addSearchList, searchData } from "../modules/mainPage";
+import {
+  addSearchList,
+  searchData,
+  setNoSearchModal,
+  setClientErrorModal,
+  setServerErrorModal,
+} from "../modules/mainPage";
 
 const Search = ({ setIsLoading }) => {
   const [text, setText] = useState("");
@@ -13,21 +19,35 @@ const Search = ({ setIsLoading }) => {
   const onChange = (e) => {
     setText(searchValue.current.value);
   };
+
   function getData() {
     setIsLoading(true);
     const targetValue = searchValue.current.value;
     const url = `https://api.github.com/search/repositories?q=${targetValue}&per_page=20&page=1`;
-    axios.get(url, headers).then((res) => {
-      const result = res.data.items.map((el) => {
-        const fullName = el.full_name.split("/");
-        console.log(fullName);
-        return { userID: fullName[0], repoName: fullName[1] };
+    axios
+      .get(url, headers)
+      .then((res) => {
+        const result = res.data.items.map((el) => {
+          const fullName = el.full_name.split("/");
+          return { userID: fullName[0], repoName: fullName[1] };
+        });
+        console.log(result);
+        if (result.length === 0) {
+          dispatch(setNoSearchModal(true));
+        }
+        dispatch(addSearchList(result));
+        dispatch(searchData(targetValue));
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        if (error.response.status >= 400) {
+          console.log(error.response.status);
+          dispatch(setClientErrorModal(true));
+        } else if (error.response.status >= 500) {
+          console.log(error.response.status);
+          dispatch(setServerErrorModal(true));
+        }
       });
-      console.log(result);
-      dispatch(addSearchList(result));
-      dispatch(searchData(targetValue));
-      setIsLoading(false);
-    });
   }
 
   const keyHandler = (e) => {

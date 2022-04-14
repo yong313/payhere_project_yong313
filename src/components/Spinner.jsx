@@ -1,7 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
-const Spinner = () => {
+const Spinner = (props) => {
+  const { scrollSpinner } = props;
+  // 무한 스크롤 스피너
+  if (scrollSpinner) {
+    return (
+      <>
+        <ScrollSpinnerBox>
+          <section>
+            <div className="sk-three-bounce">
+              <div className="sk-bounce-1 sk-child"></div>
+              <div className="sk-bounce-2 sk-child"></div>
+              <div className="sk-bounce-3 sk-child"></div>
+            </div>
+          </section>
+        </ScrollSpinnerBox>
+      </>
+    );
+  }
+  // 리스트 로딩 스피너
   return (
     <>
       <SpinnerBox>
@@ -72,6 +90,16 @@ const SpinnerBox = styled.div`
       transform: scale(1);
     }
   }
+`;
+
+const ScrollSpinnerBox = styled(SpinnerBox)`
+  width: auto;
+  height: auto;
+  margin: 65px 0;
+  position: inherit;
+  top: 0;
+  left: 0;
+  transform: translate(0%, 0%);
 `;
 
 export default Spinner;

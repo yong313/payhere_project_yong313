@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import RepositoryList from "./SearchRepository";
+import SearchRepository from "./SearchRepository";
 import Spinner from "./Spinner";
 import { useSelector } from "react-redux";
 
@@ -12,7 +12,7 @@ const LeftBox = ({ isLoading }) => {
       <Container>
         <Title titleColor={titleColor}>검색 Repository 🎉</Title>
         <ListContainer>
-          {isLoading ? <Spinner /> : <RepositoryList />}
+          {isLoading ? <Spinner /> : <SearchRepository />}
         </ListContainer>
       </Container>
     </>
