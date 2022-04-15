@@ -24,9 +24,17 @@ const SelectRepository = ({
           </div>
           <div className="repo_name_box">
             <h1 className="repo_name">
-              {selectRepo
-                ? `${repo.repoName} | ${repo.userID}`
-                : `${data.repoName} | ${data.userID}`}
+              {selectRepo ? (
+                <p>
+                  {repo.repoName}
+                  <span> | {repo.userID}</span>
+                </p>
+              ) : (
+                <p>
+                  {data.repoName}
+                  <span> | {data.userID}</span>
+                </p>
+              )}
             </h1>
           </div>
         </LeftContain>
@@ -89,8 +97,8 @@ const LeftContain = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    span {
-      color: red;
+    p > span {
+      color: #ccc;
     }
 `;
 

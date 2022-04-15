@@ -51,15 +51,17 @@ const Search = ({ setIsLoading }) => {
   }
 
   const keyHandler = (e) => {
-    if (e.code === "Enter") {
+    if (e.code === "Enter" && text.length > 0) {
       getData();
       setText("");
     }
   };
 
   const clickHandler = () => {
-    getData();
-    setText("");
+    if (text.length > 0) {
+      getData();
+      setText("");
+    }
   };
 
   return (
@@ -76,7 +78,7 @@ const Search = ({ setIsLoading }) => {
             placeholder="Repository를 검색해주세요 ✨"
           />
         </div>
-        <SearchBtn onClick={clickHandler} text={text} className="tet">
+        <SearchBtn onClick={clickHandler} text={text}>
           검색
         </SearchBtn>
       </SearchBox>
@@ -133,8 +135,11 @@ const SearchInput = styled.input`
 const SearchBtn = styled.button`
   width: auto;
   font-size: 2.3rem;
+  font-weight: bold;
   text-align: right;
   color: ${(props) => (props.text ? "#00aaee" : "#515151")};
+  cursor: ${(props) => (props.text ? "pointer" : "default")};
+  transition: all 0.35s ease;
 `;
 
 export default Search;

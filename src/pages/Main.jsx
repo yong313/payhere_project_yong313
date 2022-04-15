@@ -39,25 +39,25 @@ const Main = () => {
       )}
       {showAlreadyModal && (
         <PopupModal
-          content="이미 저장 되었습니다!!"
+          content="이미 저장 되었습니다 !!"
           setShowModal={setOverlapModal}
         />
       )}
       {showNoSearchModal && (
         <PopupModal
-          content="검색 결과가 없습니다!!"
+          content="검색 결과가 없습니다 !!"
           setShowModal={setNoSearchModal}
         />
       )}
       {showClientErrorModal && (
         <PopupModal
-          content="잘못된 접근입니다!!"
+          content="잘못된 접근입니다 !!"
           setShowModal={setClientErrorModal}
         />
       )}
       {showServerErrorModal && (
         <PopupModal
-          content="서버 통신 에러입니다!!"
+          content="서버 통신 에러입니다 !!"
           setShowModal={setClientErrorModal}
         />
       )}
