@@ -1,6 +1,6 @@
 <br />
 
-### 🎉 ****PayHere-Projects****
+### 🎉  ****PayHere-Projects****
 ✨ 페이히어 - 과제 전형 - 전용태
 
 ---
@@ -13,14 +13,18 @@
 
 ### 💫  프로젝트 소개
 
-- 추천 검색어 기능을 제공하는 검색창 구현
+- GitHub Repository명을 검색
+- 검색된 Public Repository를 등록 - (4개 등록 가능)
+- 등록된 Repository를 삭제 가능
+- 등록된 각각의 Public Repository의 issue를 한 페이지에서 확인
+
 
 <br />
 
 ### ⚙️  프로젝트 기획
 
 1. 필수 사항 및 도전 과제 확인
-2. [figma](https://www.figma.com/file/Y2E9VQnkhouOGbKZd22VJx/%ED%9C%B4%EB%A8%BC%EC%8A%A4%EC%BC%80%EC%9D%B4%ED%94%84-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9-%EC%A0%84%EC%9A%A9%ED%83%9C?node-id=0%3A1)를 사용 ui 디자인
+2. [figma](https://www.figma.com/file/HV0V03BmPVqzCaerlrr61U/%ED%8E%98%EC%9D%B4%ED%9E%88%EC%96%B4-%2F-%EA%B3%BC%EC%A0%9C%EC%A0%84%ED%98%95-UI?node-id=0%3A1)를 사용 ui 디자인
 3. GitHub Issues / Projects를 사용 ui구현 작업 및 기능 구현작업 기획
 
 <br />
