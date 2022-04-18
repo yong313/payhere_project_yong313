@@ -62,110 +62,92 @@ npm start
 
 ### 👨🏻‍💻 기능 구현 목록
 
-1. 검색어입력 시간의 간격을 사용 API호출 최적화
-    
-    ![3](https://user-images.githubusercontent.com/85574104/160145771-03ca02b3-fb79-4902-8641-124b65e44379.gif)
-    
-    > 검색창에 텍스트를 입력할 때마다 API 호출하는 것을 방지하기 위해 lodash의 debounce를 사용하여 0.25초의 API 호출의 간격을 두고 setTimeout을 사용하여 검색 중이라는 메시지를 0.45초 간격을 줘서 총 0.7초의 간격으로 검색어가 입력될 때마다 일어나는 불필요한 API 호출을 제어
-    > 
-    
-    ```jsx
-    // userInputHandler & debounce
-    
-    const userInputHandler = () => {
-        setIsValue(true);
-        timeOut = setTimeout(() => {
-          setIsUserValue(userSearchInput.current.value);
-        }, 450);
-      };
-    
-      const debouceOn = debounce(userInputHandler, 250);
-    ```
-    
-    <br />
-    
-2. 추천 검색어 리스트를 키보드 방향키를 사용하여 이동 및 선택 esc키를 사용하여 추천 검색 리스트 닫기
-    
-    ![4](https://user-images.githubusercontent.com/85574104/160146327-6e7807de-9c31-4ea9-b5f6-08685ce0ec2c.gif)
-    
-    > swich 문과 JavaScript 키보드 이벤트를 사용하여 추천 검색어 리스트에서 제공하는 7개의 검색어를 이동 및 선택 추천 검색어 상태를 관리하는 targetIndex를 사용하여 props로 자식 요소인 AutoComplete에 전달하여 targetIndex와 index 값을 삼 항 연산자로 비교하여 true, false를 반환 map 함수로 생선 된 index숫자많큼 이동, 선택이 가능하고 선택된 영억 css를 조절하여 백그라운드 및 텍스트 컬러 값을 변경
-    > 
+1. 유저의 편의성을 위해 Enter 키 및 검색 버튼 마우스 클릭으로 검색
+
+    ![2](https://user-images.githubusercontent.com/85574104/163826468-cff55e74-83c9-45e1-a2e5-7d93b629e832.gif)
+
+    >  keyHandler & clickHandler를 사용하여 검색어 입력 후 Enter 키 및 검색 버튼 마우스 클릭으로 검색 가능하도록 함
     
     ```jsx
-    // 추천 검색어 상태관리
-    const [targetIndex, setTargetIndex] = useState(-1);
-    
-    // onKeyUpHandler
-    const onKeyUpHandler = (e) => {
-        switch (e.key) {
-          case "ArrowUp":
-            if (targetIndex < 0) {
-              return;
-            } else {
-              setTargetIndex(targetIndex - 1);
-            }
-            break;
-          case "ArrowDown":
-            if (targetIndex >= 7) {
-              return;
-            }
-            setTargetIndex(targetIndex + 1);
-            break;
-          case "Escape":
-            if (e.keyCode === 27) {
-              setIsUserValue("");
-            }
-            break;
-          case "Enter":
-            if (e.key === "Enter" && targetIndex > -1) {
-              buttonClickHandler();
-            }
-            break;
-          default:
-            break;
+      const keyHandler = (e) => {
+        if (e.code === "Enter" && text.length > 0) {
+          getData();
+          setText("");
         }
       };
-    
-    // 검색 Input
-    <SearchInput
-      placeholder="질환명을 입력해 주세요."
-      type="text"
-      ref={userSearchInput}
-      onChange={debouceOn}
-      onKeyUp={onKeyUpHandler}
-    />
-    
-    // 검색어 리스트
-    <AutoList
-    	key={data.id}
-      idx={idx}
-      targetIndex={targetIndex === idx ? false : true}
-    >
-    
-    // 선택영역 css
-    const AutoList = styled.div`
-      width: 100%;
-      height: 50px;
-      display: flex;
-      padding: 0 24px;
-      align-items: center;
-      color: ${(props) => (props.targetIndex ? "" : "#fff")};
-      background-color: ${(props) => (props.targetIndex ? "#fff" : "#abcbfc")};
-    
-      .search_icon {
-        color: ${(props) => (props.targetIndex ? "#505b65" : "#fff")};
-      }
-    `;
+
+      const clickHandler = () => {
+        if (text.length > 0) {
+          getData();
+          setText("");
+        }
+      };
     ```
     
     <br />
     
-3. 엔터 및 검색 버튼 클릭으로 검색한 질환명 페이지로 이동
+2. 무한 스크롤 적용으로 Repository 검색 리스트 제공
     
-    ![5](https://user-images.githubusercontent.com/85574104/160146599-d5397217-5129-437d-bb43-989d8b178846.gif)
+    ![3](https://user-images.githubusercontent.com/85574104/163827737-c2b6878a-4765-481f-9199-755d24357967.gif)
     
-    > buttonClickHandler를 만들어 검색어 없이 엔터 혹은 검색 버튼을 클릭하면 alert를 사용하여 검색어를 입력하도록 유도, 검색어를 입력 시 url과 검색어를 담고 있는 userValue를 사용하여 해당 페이지로 이동
-    > 
+    > hook으로 무한 스크롤 모듈을 만들어 검색된 레포지토리 컴포넌트에 적용시켜 구현함. spinner를 사용하여 데이터가 로딩 중임을 유저에게 노출
+    
+    ```jsx
+    
+    // searchRepository.jsx
+   
+    const newMatchRepoList = useIntersect(
+        targetRef,
+        getSearchRepo,
+        setGetSearchRepo,
+        setIsScrollLoading
+      );
+      
+      <InfinityScrollBox>
+        {getSearchRepo ? (
+          <>
+            {newMatchRepoList.map((el, idx) => (
+              <RepoListBox key={idx}>
+                <LeftContain
+                  className="left_contain"
+                  key={idx}
+                  ref={
+                    idx + 10 === newMatchRepoList.length ? targetRef : undefined
+                  }
+                >
+                  <div className="logo_box">
+                    <GitHubLogo id="github_logo" width="20px" fill="#ccc" />
+                  </div>
+                  <div className="repo_name_box">
+                    <h1 className="repo_name">
+                      {el.repoName}
+                      <span> | {el.userID}</span>
+                    </h1>
+                  </div>
+                </LeftContain>
+                <RightContain>
+                  <AddBtn
+                    className="add_btn"
+                    id={idx}
+                    el={el}
+                    onClick={(e) => handleAddClick(e, el)}
+                  >
+                    추가
+                  </AddBtn>
+                </RightContain>
+              </RepoListBox>
+            ))}
+            {scrollLoading ? <Spinner scrollSpinner /> : null}
+          </>
+        ) : null}
+      </InfinityScrollBox>
+    ```
+    
+    <br />
+    
+3. 검색 Repository 추가 버튼 클릭 시 로컬 스토리지에 저장 / 저장 Repository 영역으로 추가 및 삭제
+    
+    > handleAddClick 함수를 통해 추가 버튼 클릭 시 로컬 스토리지에 선택된 Repository의 useId와 repoName을 저장, 저장된 데이터를 사용하여 추가 영역에 선택된 레포지토리를 추가 및 삭제하도록 구현
     
     ```jsx
     // onKeyUpHandler
