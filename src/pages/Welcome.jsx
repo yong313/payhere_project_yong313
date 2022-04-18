@@ -71,6 +71,11 @@ const WelcomeBacground = styled.div`
       }
     }
   }
+
+  @media (max-width: 1440px) {
+    width: 50%;
+    height: 68%;
+  }
 `;
 
 const Text = styled.h1`
@@ -90,6 +95,13 @@ const Text = styled.h1`
         opacity: 1;
       }
     }
+  }
+
+
+  @media (max-width: 1440px) {
+    margin-top: 1.5rem;
+    font-size: 2.55rem;
+    line-height: 4rem;
   }
 `;
 

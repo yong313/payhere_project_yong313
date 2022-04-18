@@ -28,6 +28,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  @media (max-width: 1440px) {
+    height: 97%;
+  }
 `;
 
 const Title = styled.div`

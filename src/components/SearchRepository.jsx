@@ -35,7 +35,7 @@ const SearchRepositoty = () => {
         current.userID === getSearchRepo[e.target.id].userID &&
         current.repoName === getSearchRepo[e.target.id].repoName
     );
-    console.log(repoLength);
+    // console.log(repoLength);
     if (repoLength.length < 4) {
       if (repoLength.length > 0) {
         const array = repoLength.map((el) => `${el.userID}${el.repoName}`);
@@ -108,12 +108,12 @@ const RepoListBox = styled.div`
   display: flex;
   padding: 0 15px;
   margin-bottom: 18px;
-  animation: fadeInRepoList 0.85s ease;
+  animation: fadeInRepoList 1.05s ease;
 
   @keyframes fadeInRepoList {
     from {
       opacity: 0;
-      margin-bottom: 50px;
+      margin-bottom: 38px;
     }
     to {
       opacity: 1;

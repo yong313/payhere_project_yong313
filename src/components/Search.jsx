@@ -20,7 +20,7 @@ const Search = ({ setIsLoading }) => {
     setText(searchValue.current.value);
   };
 
-  function getData() {
+  const getData = () => {
     setIsLoading(true);
     const targetValue = searchValue.current.value;
     const url = `https://api.github.com/search/repositories?q=${targetValue}&per_page=20&page=1`;
@@ -31,7 +31,7 @@ const Search = ({ setIsLoading }) => {
           const fullName = el.full_name.split("/");
           return { userID: fullName[0], repoName: fullName[1] };
         });
-        console.log(result);
+        // console.log(result);
         if (result.length === 0) {
           dispatch(setNoSearchModal(true));
         }
@@ -41,14 +41,18 @@ const Search = ({ setIsLoading }) => {
       })
       .catch((error) => {
         if (error.response.status >= 400) {
+          console.log(error.response.data);
           console.log(error.response.status);
+          console.log(error.response.headers);
           dispatch(setClientErrorModal(true));
         } else if (error.response.status >= 500) {
+          console.log(error.response.data);
           console.log(error.response.status);
+          console.log(error.response.headers);
           dispatch(setServerErrorModal(true));
         }
       });
-  }
+  };
 
   const keyHandler = (e) => {
     if (e.code === "Enter" && text.length > 0) {

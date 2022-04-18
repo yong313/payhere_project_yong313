@@ -61,14 +61,16 @@ const RepoListBox = styled.div`
   padding: 0 15px;
   margin-bottom: 18px;
   cursor: pointer;
-  animation: fadeInRepoList 0.85s ease;
+  animation: fadeInRepoList 1.05s ease;
 
   @keyframes fadeInRepoList {
     from {
       opacity: 0;
+      margin-top: 35px;
     }
     to {
       opacity: 1;
+      margin-top: 0;
     }
   }
 `;

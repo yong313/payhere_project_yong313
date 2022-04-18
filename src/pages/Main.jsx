@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import {
-  setFourModal,
-  setOverlapModal,
-  setNoSearchModal,
-  setClientErrorModal,
-  setServerErrorModal,
-} from "../modules/mainPage";
 // 이미지 및 로고
 import { ReactComponent as GitHubLogo } from "../assets/github_logo.svg";
 import MainBackground from "../assets/main_img.png";
@@ -16,6 +9,14 @@ import Search from "../components/Search";
 import LeftBox from "../components/LeftBox";
 import RightBox from "../components/RightBox";
 import PopupModal from "../components/PopupModal";
+
+import {
+  setFourModal,
+  setOverlapModal,
+  setNoSearchModal,
+  setClientErrorModal,
+  setServerErrorModal,
+} from "../modules/mainPage";
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,32 +34,32 @@ const Main = () => {
     <>
       {showFourModal && (
         <PopupModal
-          content="4개 이상 저장은 안돼요 !!"
+          content="4개 이상 저장은 안돼요!!"
           setShowModal={setFourModal}
         />
       )}
       {showAlreadyModal && (
         <PopupModal
-          content="이미 저장 되었습니다 !!"
+          content="이미 저장 되었습니다!!"
           setShowModal={setOverlapModal}
         />
       )}
       {showNoSearchModal && (
         <PopupModal
-          content="검색 결과가 없습니다 !!"
+          content="검색 결과가 없습니다!!"
           setShowModal={setNoSearchModal}
         />
       )}
       {showClientErrorModal && (
         <PopupModal
-          content="잘못된 접근입니다 !!"
+          content="잘못된 접근입니다 잠시 후 다시 검색해 주세요!!"
           setShowModal={setClientErrorModal}
         />
       )}
       {showServerErrorModal && (
         <PopupModal
-          content="서버 통신 에러입니다 !!"
-          setShowModal={setClientErrorModal}
+          content="서버 통신 에러입니다 잠시 후 다시 검색해 주세요!!"
+          setShowModal={setServerErrorModal}
         />
       )}
       <MainBox>
@@ -110,6 +111,11 @@ const HeadBox = styled.div`
   text-align: center;
   position: relative;
   top: -5px;
+
+  @media (max-width: 1440px) {
+    height: 25rem;
+    top: -10px;
+  }
 `;
 
 const TitleBox = styled.div`
@@ -138,6 +144,10 @@ const ContentBox = styled.div`
   height: 52.5rem;
   margin: 0 auto;
   display: flex;
+
+  @media (max-width: 1440px) {
+    height: 42rem;
+  }
 `;
 
 export default Main;

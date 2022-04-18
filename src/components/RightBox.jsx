@@ -64,6 +64,10 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1440px) {
+    height: 97%;
+  }
 `;
 
 const Title = styled.div`
