@@ -11,6 +11,7 @@ const PopupModal = ({ content, setShowModal }) => {
       clearTimeout(timeOut);
     };
   }, [dispatch, setShowModal]);
+
   return (
     <>
       <ModalBox>
@@ -49,9 +50,8 @@ const ModalBox = styled.div`
 `;
 
 const Container = styled.div`
-  width: 38rem;
+  width: 100%;
   height: 18rem;
-  line-height: 18rem;
   text-align: center;
   border-radius: 20px;
   background-color: transparent;
@@ -60,7 +60,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   animation: upDown 0.55s ease;
-
+  
     @keyframes upDown {
       from {
         opacity: 0;
@@ -75,9 +75,9 @@ const Container = styled.div`
 `;
 
 const MessageBox = styled.div`
-  width: 290px;
-  height: 60px;
-  line-height: 64px;
+  width: auto;
+  height: auto;
+  padding: 20px 30px;
   text-align: center;
   color: #ff7a7a;
   background-color: #242424;

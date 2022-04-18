@@ -34,7 +34,7 @@ const useIntersect = (
         setGetSearchRepo([...getSearchRepo, ...result]);
         dispatch(counterData());
       } catch (err) {
-        console.log("더 이상 데이터 없음");
+        // console.log("더 이상 데이터 없음");
         setIsScrollLoading(false);
       }
     })();
@@ -43,7 +43,7 @@ const useIntersect = (
   const callback = useCallback(
     ([entry]) => {
       if (entry.isIntersecting) {
-        console.log("데이터 추가 스크롤 시작");
+        // console.log("데이터 추가 스크롤 시작");
         setIsScrollLoading(true);
         getApiHandler(searchText, page);
       }

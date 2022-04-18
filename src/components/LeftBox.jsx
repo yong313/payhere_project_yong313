@@ -28,6 +28,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  @media (max-width: 1440px) {
+    height: 97%;
+  }
 `;
 
 const Title = styled.div`
@@ -38,6 +42,7 @@ const Title = styled.div`
   font-size: 2.2rem;
   font-weight: bold;
   color: ${(props) => (props.titleColor ? "#ffffff" : "#424242")};
+  transition: all 0.35s ease;
 `;
 
 const ListContainer = styled.div`

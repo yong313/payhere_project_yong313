@@ -24,9 +24,17 @@ const SelectRepository = ({
           </div>
           <div className="repo_name_box">
             <h1 className="repo_name">
-              {selectRepo
-                ? `${repo.repoName} | ${repo.userID}`
-                : `${data.repoName} | ${data.userID}`}
+              {selectRepo ? (
+                <p>
+                  {repo.repoName}
+                  <span> | {repo.userID}</span>
+                </p>
+              ) : (
+                <p>
+                  {data.repoName}
+                  <span> | {data.userID}</span>
+                </p>
+              )}
             </h1>
           </div>
         </LeftContain>
@@ -53,14 +61,16 @@ const RepoListBox = styled.div`
   padding: 0 15px;
   margin-bottom: 18px;
   cursor: pointer;
-  animation: fadeInRepoList 0.85s ease;
+  animation: fadeInRepoList 1.05s ease;
 
   @keyframes fadeInRepoList {
     from {
       opacity: 0;
+      margin-top: 35px;
     }
     to {
       opacity: 1;
+      margin-top: 0;
     }
   }
 `;
@@ -89,8 +99,8 @@ const LeftContain = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    span {
-      color: red;
+    p > span {
+      color: #ccc;
     }
 `;
 

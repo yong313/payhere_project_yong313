@@ -20,7 +20,7 @@ const Search = ({ setIsLoading }) => {
     setText(searchValue.current.value);
   };
 
-  function getData() {
+  const getData = () => {
     setIsLoading(true);
     const targetValue = searchValue.current.value;
     const url = `https://api.github.com/search/repositories?q=${targetValue}&per_page=20&page=1`;
@@ -31,7 +31,7 @@ const Search = ({ setIsLoading }) => {
           const fullName = el.full_name.split("/");
           return { userID: fullName[0], repoName: fullName[1] };
         });
-        console.log(result);
+        // console.log(result);
         if (result.length === 0) {
           dispatch(setNoSearchModal(true));
         }
@@ -41,25 +41,31 @@ const Search = ({ setIsLoading }) => {
       })
       .catch((error) => {
         if (error.response.status >= 400) {
+          console.log(error.response.data);
           console.log(error.response.status);
+          console.log(error.response.headers);
           dispatch(setClientErrorModal(true));
         } else if (error.response.status >= 500) {
+          console.log(error.response.data);
           console.log(error.response.status);
+          console.log(error.response.headers);
           dispatch(setServerErrorModal(true));
         }
       });
-  }
+  };
 
   const keyHandler = (e) => {
-    if (e.code === "Enter") {
+    if (e.code === "Enter" && text.length > 0) {
       getData();
       setText("");
     }
   };
 
   const clickHandler = () => {
-    getData();
-    setText("");
+    if (text.length > 0) {
+      getData();
+      setText("");
+    }
   };
 
   return (
@@ -76,7 +82,7 @@ const Search = ({ setIsLoading }) => {
             placeholder="Repository를 검색해주세요 ✨"
           />
         </div>
-        <SearchBtn onClick={clickHandler} text={text} className="tet">
+        <SearchBtn onClick={clickHandler} text={text}>
           검색
         </SearchBtn>
       </SearchBox>
@@ -133,8 +139,11 @@ const SearchInput = styled.input`
 const SearchBtn = styled.button`
   width: auto;
   font-size: 2.3rem;
+  font-weight: bold;
   text-align: right;
   color: ${(props) => (props.text ? "#00aaee" : "#515151")};
+  cursor: ${(props) => (props.text ? "pointer" : "default")};
+  transition: all 0.35s ease;
 `;
 
 export default Search;

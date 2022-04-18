@@ -64,6 +64,10 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1440px) {
+    height: 97%;
+  }
 `;
 
 const Title = styled.div`
@@ -74,6 +78,7 @@ const Title = styled.div`
   font-size: 2.2rem;
   font-weight: bold;
   color: ${(props) => (props.titleColor ? "#ffffff" : "#424242")};
+  transition: 0.35s;
 `;
 
 const ListContainer = styled.div`

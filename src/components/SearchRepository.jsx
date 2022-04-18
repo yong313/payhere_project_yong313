@@ -35,7 +35,7 @@ const SearchRepositoty = () => {
         current.userID === getSearchRepo[e.target.id].userID &&
         current.repoName === getSearchRepo[e.target.id].repoName
     );
-    console.log(repoLength);
+    // console.log(repoLength);
     if (repoLength.length < 4) {
       if (repoLength.length > 0) {
         const array = repoLength.map((el) => `${el.userID}${el.repoName}`);
@@ -76,7 +76,8 @@ const SearchRepositoty = () => {
                   </div>
                   <div className="repo_name_box">
                     <h1 className="repo_name">
-                      {el.repoName} | <span>{el.userID}</span>
+                      {el.repoName}
+                      <span> | {el.userID}</span>
                     </h1>
                   </div>
                 </LeftContain>
@@ -107,12 +108,12 @@ const RepoListBox = styled.div`
   display: flex;
   padding: 0 15px;
   margin-bottom: 18px;
-  animation: fadeInRepoList 0.85s ease;
+  animation: fadeInRepoList 1.05s ease;
 
   @keyframes fadeInRepoList {
     from {
       opacity: 0;
-      margin-bottom: 50px;
+      margin-bottom: 38px;
     }
     to {
       opacity: 1;
@@ -131,12 +132,12 @@ const RepoListBox = styled.div`
     }
 
     > .left_contain > .repo_name_box > .repo_name {
-      color: #00aaee;
+      color: #000;
       transition: all 0.35s ease;
     }
 
     > .left_contain > .repo_name_box > .repo_name > span {
-      color: #000;
+      color: #ccc;
       transition: all 0.35s ease;
     }
   }
@@ -176,6 +177,10 @@ const LeftContain = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    .text_line {
+      color: #ccc;
+    }
 `;
 
 const RightContain = styled(LeftContain)`
