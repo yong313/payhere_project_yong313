@@ -31,15 +31,17 @@
 
 ### 🛠 기능 시연 
 
-![1](https://user-images.githubusercontent.com/85574104/160143893-695c1925-f5a1-49b1-8667-14703ac4339d.gif)
+![1](https://user-images.githubusercontent.com/85574104/163825498-05161329-4f0c-4271-839f-e070e84ad7b6.gif)
 
 <br />
 
 ### 🔨  실행방법 - 1
 
-1. 배포 된 주소로 접속해주세요. - [배포링크](https://silly-tapioca-df23d1.netlify.app/)
-2. 질환명을 검색할 수 있는 검색창에 질환명을 입력해주세요.
-3. 추천 검색어 목록은 키보드 상하 방향키로 이동하며 선택 가능합니다. 원하는 추천 검색어로 이동하여 엔터키를 누르면 해당 질환을 기반으로 한 임상시험 정보를 제공하는 웹 사이트로 이동합니다. 
+1. 배포 된 주소로 접속해주세요. - [배포링크](https://625d71ef94cca85745062d6d--euphonious-halva-4e305d.netlify.app/)
+2. 검색창에 GitHub Repository 명을 검색해 주세요. 검색어 입력 후 Enter 키 혹은 우측에 검색 버튼 두 가지 방법으로 검색 가능합니다.
+3. 검색된 Public Repository 리스트에서 자주 찾는 Repository를 최대 4개까지 등록하여 사용할 수 있습니다. 삭제도 가능합니다.
+4. 등록된 Repository를 클릭 시 issue를 한 페이지에서 모아서 확인 가능합니다.
+5. issue를 클릭 시 해딩 issue의 GitHub 페이지로 이동합니다. 
 
 <br />
 
@@ -47,9 +49,9 @@
 
 
 ```jsx
-git clone https://github.com/yong313/wanted-codestates-project-10.git
+git clone https://github.com/yong313/payhere_project_yong313.git
 
-cd wanted-codestates-project-10
+cd payhere
 
 npm install
 
