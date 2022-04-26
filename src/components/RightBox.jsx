@@ -3,19 +3,18 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SelectRpository from "../components/SelectRepository";
-import { deleteData } from "../modules/mainPage";
+import { DELETE_DATA } from "../modules/mainSlice";
+import { setLocalStorage, getLocalStorage } from "../util/localStorage";
 
 const RightBox = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const addRepositories = useSelector((state) => state.mainPage.addRepo);
-  const titleColor = useSelector((state) => state.mainPage.addRepo.length);
+  const addRepositories = useSelector((state) => state.main.addRepo);
+  const titleColor = useSelector((state) => state.main.addRepo);
   useEffect(() => {
-    const origin = JSON.parse(window.localStorage.getItem("savedRepo"));
+    const origin = getLocalStorage("saveRepo");
     if (origin) {
-      dispatch(
-        deleteData(JSON.parse(window.localStorage.getItem("savedRepo")))
-      );
+      dispatch(DELETE_DATA(getLocalStorage("saveRepo")));
     }
   }, [dispatch]);
 
@@ -23,19 +22,22 @@ const RightBox = () => {
     e.stopPropagation();
     const target = e.target.id;
     let leftData = addRepositories.filter((current, i) => Number(target) !== i);
-    dispatch(deleteData(leftData));
-    window.localStorage.setItem("savedRepo", JSON.stringify(leftData));
+    dispatch(DELETE_DATA(leftData));
+    console.log(leftData);
+    setLocalStorage("savedRepo", leftData);
   };
+
   const handleSetLocalStorage = (e, idx) => {
     const target = Number(idx);
     const clickedData = addRepositories[target];
-    window.localStorage.setItem("selectedRepos", JSON.stringify(clickedData));
+    setLocalStorage("selectedRepos", clickedData);
     navigate("/issue");
   };
+
   return (
     <>
       <Container>
-        <Title titleColor={titleColor}>저장 Repository 🎁</Title>
+        <Title titleColor={titleColor.length > 0}>저장 Repository 🎁</Title>
         <ListContainer>
           {addRepositories &&
             addRepositories.map((repo, index) => {
@@ -66,19 +68,26 @@ const Container = styled.div`
   flex-direction: column;
 
   @media (max-width: 1440px) {
-    height: 97%;
+    height: 96%;
   }
 `;
 
 const Title = styled.div`
   width: 100%;
   height: 10%;
-  padding: 30px 0 0 30px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-left: 30px;
   margin-bottom: 20px;
   font-size: 2.2rem;
   font-weight: bold;
   color: ${(props) => (props.titleColor ? "#ffffff" : "#424242")};
   transition: 0.35s;
+
+  @media (max-width: 1440px) {
+    font-size: 1.95rem;
+  }
 `;
 
 const ListContainer = styled.div`

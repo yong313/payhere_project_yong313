@@ -6,7 +6,9 @@ import IssueCard from "../components/IssueCard";
 import NoIssue from "../components/NoIssue";
 import Pagination from "../components/Pagination";
 import { headers } from "../util/util";
+import { issueUrl } from "../util/api";
 import Spinner from "../components/Spinner";
+import { getLocalStorage } from "../util/localStorage";
 
 const Issue = () => {
   const navigate = useNavigate();
@@ -17,11 +19,8 @@ const Issue = () => {
   const [numOfPages, setNumOfPages] = useState(0);
   const [clickedText, setClickedText] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
-  const { userID, repoName } = JSON.parse(
-    window.localStorage.getItem("selectedRepos")
-  );
-
-  const url = `https://api.github.com/repos/${userID}/${repoName}/issues?state=all&&per_page=100`;
+  const selectData = getLocalStorage("selectedRepos");
+  const url = `${issueUrl}/${selectData[0].userID}/${selectData[0].repoName}/issues?state=all&&per_page=100`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -110,7 +109,9 @@ const Issue = () => {
             ))}
           </FilterBtn>
         </Headers>
-        <RepositoryName>{repoName + " | " + userID}</RepositoryName>
+        <RepositoryName>
+          {selectData[0].repoName + " | " + selectData[0].userID}
+        </RepositoryName>
         <Container>
           {isLoading ? (
             <SpinnerWrapper>
@@ -277,7 +278,6 @@ const IssueList = styled.div`
   gap: 2.5rem;
   justify-items: center;
   grid-template-columns: repeat(3, 1fr);
-
   animation: showIssue 0.85s ease;
 
   @keyframes showIssue {

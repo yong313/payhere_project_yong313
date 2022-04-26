@@ -5,12 +5,12 @@ import Spinner from "./Spinner";
 import { useSelector } from "react-redux";
 
 const LeftBox = ({ isLoading }) => {
-  const titleColor = useSelector((state) => state.mainPage.searchList.length);
+  const titleColor = useSelector((state) => state.main.searchList);
 
   return (
     <>
       <Container>
-        <Title titleColor={titleColor}>검색 Repository 🎉</Title>
+        <Title titleColor={titleColor.length > 0}>검색 Repository 🎉</Title>
         <ListContainer>
           {isLoading ? <Spinner /> : <SearchRepository />}
         </ListContainer>
@@ -30,19 +30,26 @@ const Container = styled.div`
   position: relative;
 
   @media (max-width: 1440px) {
-    height: 97%;
+    height: 96%;
   }
 `;
 
 const Title = styled.div`
   width: 100%;
   height: 10%;
-  padding: 30px 0 0 30px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-left: 30px;
   margin-bottom: 20px;
   font-size: 2.2rem;
   font-weight: bold;
   color: ${(props) => (props.titleColor ? "#ffffff" : "#424242")};
   transition: all 0.35s ease;
+
+  @media (max-width: 1440px) {
+    font-size: 1.95rem;
+  }
 `;
 
 const ListContainer = styled.div`

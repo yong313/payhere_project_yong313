@@ -100,7 +100,7 @@ const RepoName = styled.div`
 
 const RegistDate = styled.p`
   font-size: 1.2rem;
-  color: #cccccc;
+  color: #ccc;
 `;
 
 const Bottom = styled.div`

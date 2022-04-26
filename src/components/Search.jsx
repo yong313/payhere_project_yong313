@@ -4,13 +4,14 @@ import { ReactComponent as SearchIcon } from "../assets/search_icon.svg";
 import axios from "axios";
 import { headers } from "../util/util";
 import { useDispatch } from "react-redux";
+import { searchUrl } from "../util/api";
 import {
-  addSearchList,
-  searchData,
-  setNoSearchModal,
-  setClientErrorModal,
-  setServerErrorModal,
-} from "../modules/mainPage";
+  SEARCH_DATA,
+  ADD_SEARCH_LIST,
+  THIRD_MODAL,
+  CLIENT_ERROR_MODAL,
+  SERVER_ERROR_MODAL,
+} from "../modules/mainSlice";
 
 const Search = ({ setIsLoading }) => {
   const [text, setText] = useState("");
@@ -23,7 +24,7 @@ const Search = ({ setIsLoading }) => {
   const getData = () => {
     setIsLoading(true);
     const targetValue = searchValue.current.value;
-    const url = `https://api.github.com/search/repositories?q=${targetValue}&per_page=20&page=1`;
+    const url = `${searchUrl}?q=${targetValue}&per_page=20&page=1`;
     axios
       .get(url, headers)
       .then((res) => {
@@ -33,23 +34,23 @@ const Search = ({ setIsLoading }) => {
         });
         // console.log(result);
         if (result.length === 0) {
-          dispatch(setNoSearchModal(true));
+          dispatch(THIRD_MODAL());
         }
-        dispatch(addSearchList(result));
-        dispatch(searchData(targetValue));
+        dispatch(ADD_SEARCH_LIST(result));
+        dispatch(SEARCH_DATA(targetValue));
         setIsLoading(false);
       })
       .catch((error) => {
         if (error.response.status >= 400) {
+          dispatch(CLIENT_ERROR_MODAL());
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
-          dispatch(setClientErrorModal(true));
         } else if (error.response.status >= 500) {
+          dispatch(SERVER_ERROR_MODAL());
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
-          dispatch(setServerErrorModal(true));
         }
       });
   };
@@ -93,7 +94,7 @@ const Search = ({ setIsLoading }) => {
 const SearchBox = styled.div`
   width: 75%;
   height: 4rem;
-  margin: 0.5rem auto 3.5rem auto;
+  margin: 0.5rem auto 2.5rem auto;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
