@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { counterData } from "../modules/mainPage";
+import { COUNTER_DATA } from "../modules/mainSlice";
 
 const useIntersect = (
   targetRef,
@@ -9,8 +9,8 @@ const useIntersect = (
   setGetSearchRepo,
   setIsScrollLoading
 ) => {
-  const page = useSelector((state) => state.mainPage.pageCounter);
-  const searchText = useSelector((state) => state.mainPage.searchString);
+  const page = useSelector((state) => state.main.pageCounter);
+  const searchText = useSelector((state) => state.main.searchString);
   const [showList, setShowList] = useState([]);
   const dispatch = useDispatch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,7 +32,7 @@ const useIntersect = (
           return { userID: fullName[0], repoName: fullName[1] };
         });
         setGetSearchRepo([...getSearchRepo, ...result]);
-        dispatch(counterData());
+        dispatch(COUNTER_DATA());
       } catch (err) {
         // console.log("더 이상 데이터 없음");
         setIsScrollLoading(false);

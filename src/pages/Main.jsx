@@ -11,55 +11,54 @@ import RightBox from "../components/RightBox";
 import PopupModal from "../components/PopupModal";
 
 import {
-  setFourModal,
-  setOverlapModal,
-  setNoSearchModal,
-  setClientErrorModal,
-  setServerErrorModal,
-} from "../modules/mainPage";
+  MODAL_OPEN,
+  SECOND_MODAL,
+  THIRD_MODAL,
+  CLIENT_ERROR_MODAL,
+  SERVER_ERROR_MODAL,
+} from "../modules/mainSlice";
 
 const Main = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const showFourModal = useSelector((state) => state.mainPage.modalOpen);
-  const showAlreadyModal = useSelector((state) => state.mainPage.secondModal);
-  const showNoSearchModal = useSelector((state) => state.mainPage.thirdModal);
+  const showFourModal = useSelector((state) => state.main.modalOpen);
+  const showAlreadyModal = useSelector((state) => state.main.secondModal);
+  const showNoSearchModal = useSelector((state) => state.main.thirdModal);
   const showClientErrorModal = useSelector(
-    (state) => state.mainPage.clientErrorModal
+    (state) => state.main.clientErrorModal
   );
   const showServerErrorModal = useSelector(
-    (state) => state.mainPage.serverErrorModal
+    (state) => state.main.serverErrorModal
   );
-
   return (
     <>
       {showFourModal && (
         <PopupModal
           content="4개 이상 저장은 안돼요!!"
-          setShowModal={setFourModal}
+          setShowModal={MODAL_OPEN}
         />
       )}
       {showAlreadyModal && (
         <PopupModal
           content="이미 저장 되었습니다!!"
-          setShowModal={setOverlapModal}
+          setShowModal={SECOND_MODAL}
         />
       )}
       {showNoSearchModal && (
         <PopupModal
           content="검색 결과가 없습니다!!"
-          setShowModal={setNoSearchModal}
+          setShowModal={THIRD_MODAL}
         />
       )}
       {showClientErrorModal && (
         <PopupModal
           content="잘못된 접근입니다 잠시 후 다시 검색해 주세요!!"
-          setShowModal={setClientErrorModal}
+          setShowModal={CLIENT_ERROR_MODAL}
         />
       )}
       {showServerErrorModal && (
         <PopupModal
           content="서버 통신 에러입니다 잠시 후 다시 검색해 주세요!!"
-          setShowModal={setServerErrorModal}
+          setShowModal={SERVER_ERROR_MODAL}
         />
       )}
       <MainBox>
@@ -88,6 +87,10 @@ const Main = () => {
 const MainBox = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   animation: fadeIn 0.95s ease;
 
     @keyframes fadeIn {
@@ -103,14 +106,14 @@ const MainBox = styled.div`
 
 const HeadBox = styled.div`
   width: 100%;
-  height: 30rem;
+  height: 26rem;
   background-image: url(${MainBackground});
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center -33px;
+  background-position: center -50px;
   text-align: center;
   position: relative;
-  top: -5px;
+  top: 0px;
 
   @media (max-width: 1440px) {
     height: 25rem;
@@ -147,6 +150,7 @@ const ContentBox = styled.div`
 
   @media (max-width: 1440px) {
     height: 42rem;
+    padding: 0 80px;
   }
 `;
 

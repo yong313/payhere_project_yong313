@@ -5,19 +5,20 @@ import Spinner from "./Spinner";
 import useIntersect from "../hooks/useIntersect";
 import { ReactComponent as GitHubLogo } from "../assets/github_logo.svg";
 import {
-  addSearchList,
-  searchAfterAdd,
-  setFourModal,
-  setOverlapModal,
-} from "../modules/mainPage";
+  ADD_SEARCH_LIST,
+  AFTER_DATA,
+  MODAL_OPEN,
+  SECOND_MODAL,
+} from "../modules/mainSlice";
+import { setLocalStorage } from "../util/localStorage";
 
 const SearchRepositoty = () => {
   const [scrollLoading, setIsScrollLoading] = useState(false);
   const targetRef = useRef(null);
   const dispatch = useDispatch();
-  const getSearchRepo = useSelector((state) => state.mainPage.searchList);
+  const getSearchRepo = useSelector((state) => state.main.searchList);
   const setGetSearchRepo = (data) => {
-    dispatch(addSearchList(data));
+    dispatch(ADD_SEARCH_LIST(data));
   };
 
   const newMatchRepoList = useIntersect(
@@ -27,7 +28,7 @@ const SearchRepositoty = () => {
     setIsScrollLoading
   );
 
-  const repoLength = useSelector((state) => state.mainPage.addRepo);
+  const repoLength = useSelector((state) => state.main.addRepo);
 
   const handleAddClick = (e, target) => {
     const addData = getSearchRepo.filter(
@@ -40,20 +41,17 @@ const SearchRepositoty = () => {
       if (repoLength.length > 0) {
         const array = repoLength.map((el) => `${el.userID}${el.repoName}`);
         if (array.includes(`${target.userID}${target.repoName}`)) {
-          dispatch(setOverlapModal());
+          dispatch(SECOND_MODAL());
         } else {
-          dispatch(searchAfterAdd(addData[0]));
-          window.localStorage.setItem(
-            "savedRepo",
-            JSON.stringify([...repoLength, addData[0]])
-          );
+          dispatch(AFTER_DATA(addData[0]));
+          setLocalStorage("savedRepo", [...repoLength, addData[0]]);
         }
       } else {
-        dispatch(searchAfterAdd(addData[0]));
-        window.localStorage.setItem("savedRepo", JSON.stringify([addData[0]]));
+        dispatch(AFTER_DATA(addData[0]));
+        setLocalStorage("savedRepo", [addData[0]]);
       }
     } else {
-      dispatch(setFourModal());
+      dispatch(MODAL_OPEN());
     }
   };
 
@@ -160,7 +158,7 @@ const LeftContain = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
+
   .logo_box {
     width: 6%;
   }
@@ -177,10 +175,6 @@ const LeftContain = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    .text_line {
-      color: #ccc;
-    }
 `;
 
 const RightContain = styled(LeftContain)`
