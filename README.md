@@ -7,7 +7,7 @@
 
 ### 🎁  배포링크
 
-- [배포링크](https://625d71ef94cca85745062d6d--euphonious-halva-4e305d.netlify.app/)
+- [배포링크](https://euphonious-halva-4e305d.netlify.app/)
 
 <br />
 
@@ -37,7 +37,7 @@
 
 ### 🔨  실행방법 - 1
 
-1. 배포 된 주소로 접속해주세요. - [배포링크](https://625d71ef94cca85745062d6d--euphonious-halva-4e305d.netlify.app/)
+1. 배포 된 주소로 접속해주세요. - [배포링크](https://euphonious-halva-4e305d.netlify.app/)
 2. 검색창에 GitHub Repository 명을 검색해 주세요. 검색어 입력 후 Enter 키 혹은 우측에 검색 버튼 두 가지 방법으로 검색 가능합니다.
 3. 검색된 Public Repository 리스트에서 자주 찾는 Repository를 최대 4개까지 등록하여 사용할 수 있습니다. 삭제도 가능합니다.
 4. 등록된 Repository를 클릭 시 issue를 한 페이지에서 모아서 확인 가능합니다.
