@@ -70,6 +70,7 @@ const Issue = () => {
     setCurrentIndex(newIndex);
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const chageData = (text) => {
     const newDatas = datas.filter((obj) => {
       switch (text) {
@@ -86,10 +87,13 @@ const Issue = () => {
     setIssueDataArr(newDatas);
   };
 
-  const setOnClick = (text) => {
-    setClickedText(text);
-    chageData(text);
-  };
+  const setOnClick = useCallback(
+    (text) => {
+      setClickedText(text);
+      chageData(text);
+    },
+    [chageData]
+  );
 
   return (
     <>
@@ -126,8 +130,8 @@ const Issue = () => {
                       showPage * (currentIndex - 1),
                       showPage * currentIndex - 1 + 1
                     )
-                    .map((dataObj, idx) => (
-                      <IssueCard key={idx} dataObj={dataObj} />
+                    .map((dataObj) => (
+                      <IssueCard key={dataObj.number} dataObj={dataObj} />
                     ))
                 ) : (
                   <NoIssue />

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const Pagination = React.memo(function Pagination({
@@ -31,15 +31,18 @@ const Pagination = React.memo(function Pagination({
     }
   }, [currentIndex, pageIndexArray]);
 
-  const clickEventHandler = (e) => {
-    if (e.target.textContent === "prev") {
-      changePageIndex(currentIndex * 1 - 1);
-    } else if (e.target.textContent === "next") {
-      changePageIndex(currentIndex * 1 + 1);
-    } else {
-      changePageIndex(e.target.textContent * 1);
-    }
-  };
+  const clickEventHandler = useCallback(
+    (e) => {
+      if (e.target.textContent === "prev") {
+        changePageIndex(currentIndex * 1 - 1);
+      } else if (e.target.textContent === "next") {
+        changePageIndex(currentIndex * 1 + 1);
+      } else {
+        changePageIndex(e.target.textContent * 1);
+      }
+    },
+    [changePageIndex, currentIndex]
+  );
 
   return (
     <Wrapper>
