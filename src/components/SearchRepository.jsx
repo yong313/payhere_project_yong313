@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "./Spinner";
@@ -30,30 +30,33 @@ const SearchRepositoty = () => {
 
   const repoLength = useSelector((state) => state.main.addRepo);
 
-  const handleAddClick = (e, target) => {
-    const addData = getSearchRepo.filter(
-      (current) =>
-        current.userID === getSearchRepo[e.target.id].userID &&
-        current.repoName === getSearchRepo[e.target.id].repoName
-    );
-    // console.log(repoLength);
-    if (repoLength.length < 4) {
-      if (repoLength.length > 0) {
-        const array = repoLength.map((el) => `${el.userID}${el.repoName}`);
-        if (array.includes(`${target.userID}${target.repoName}`)) {
-          dispatch(SECOND_MODAL());
+  const handleAddClick = useCallback(
+    (e, target) => {
+      const addData = getSearchRepo.filter(
+        (current) =>
+          current.userID === getSearchRepo[e.target.id].userID &&
+          current.repoName === getSearchRepo[e.target.id].repoName
+      );
+      // console.log(repoLength);
+      if (repoLength.length < 4) {
+        if (repoLength.length > 0) {
+          const array = repoLength.map((el) => `${el.userID}${el.repoName}`);
+          if (array.includes(`${target.userID}${target.repoName}`)) {
+            dispatch(SECOND_MODAL());
+          } else {
+            dispatch(AFTER_DATA(addData[0]));
+            setLocalStorage("savedRepo", [...repoLength, addData[0]]);
+          }
         } else {
           dispatch(AFTER_DATA(addData[0]));
-          setLocalStorage("savedRepo", [...repoLength, addData[0]]);
+          setLocalStorage("savedRepo", [addData[0]]);
         }
       } else {
-        dispatch(AFTER_DATA(addData[0]));
-        setLocalStorage("savedRepo", [addData[0]]);
+        dispatch(MODAL_OPEN());
       }
-    } else {
-      dispatch(MODAL_OPEN());
-    }
-  };
+    },
+    [dispatch, getSearchRepo, repoLength]
+  );
 
   return (
     <>

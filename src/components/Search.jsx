@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../assets/search_icon.svg";
 import axios from "axios";
@@ -21,6 +21,7 @@ const Search = ({ setIsLoading }) => {
     setText(searchValue.current.value);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = () => {
     setIsLoading(true);
     const targetValue = searchValue.current.value;
@@ -55,19 +56,22 @@ const Search = ({ setIsLoading }) => {
       });
   };
 
-  const keyHandler = (e) => {
-    if (e.code === "Enter" && text.length > 0) {
-      getData();
-      setText("");
-    }
-  };
+  const keyHandler = useCallback(
+    (e) => {
+      if (e.code === "Enter" && text.length > 0) {
+        getData();
+        setText("");
+      }
+    },
+    [getData, text.length]
+  );
 
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     if (text.length > 0) {
       getData();
       setText("");
     }
-  };
+  }, [getData, text.length]);
 
   return (
     <>

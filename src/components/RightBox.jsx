@@ -23,7 +23,7 @@ const RightBox = () => {
     const target = e.target.id;
     let leftData = addRepositories.filter((current, i) => Number(target) !== i);
     dispatch(DELETE_DATA(leftData));
-    console.log(leftData);
+    // console.log(leftData);
     setLocalStorage("savedRepo", leftData);
   };
 
@@ -43,7 +43,7 @@ const RightBox = () => {
             addRepositories.map((repo, index) => {
               return (
                 <SelectRpository
-                  key={index}
+                  key={`${repo.userID}|${repo.repoName}`}
                   repo={repo}
                   id={index}
                   handleDltClick={(e) => handleDltClick(e)}
