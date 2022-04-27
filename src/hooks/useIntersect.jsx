@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { searchUrl } from "../util/api";
+import { headers } from "../util/util";
 import { COUNTER_DATA } from "../modules/mainSlice";
 
 const useIntersect = (
@@ -15,18 +17,10 @@ const useIntersect = (
   const dispatch = useDispatch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getApiHandler = (target, page) => {
-    const url = "https://api.github.com";
+    const url = `${searchUrl}?q=${target}&per_page=20&page=${page}`;
     (async () => {
       try {
-        const res = await axios.get(
-          `${url}/search/repositories?q=${target}&per_page=20&page=${page}`,
-          {
-            headers: {
-              Authorization: process.env.REACT_APP_API_TOKEN,
-            },
-          }
-        );
-
+        const res = await axios.get(url, headers);
         const result = res.data.items.map((el) => {
           const fullName = el.full_name.split("/");
           return { userID: fullName[0], repoName: fullName[1] };

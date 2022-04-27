@@ -105,7 +105,7 @@ const Button = styled.button`
   font-size: 2rem;
   font-weight: 600;
   cursor: pointer;
-  
+
   :hover {
     color: #00aaee;
     transition: all 0.35s ease;
