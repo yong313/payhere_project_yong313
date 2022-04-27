@@ -37,6 +37,7 @@ const SearchRepositoty = () => {
           current.userID === getSearchRepo[e.target.id].userID &&
           current.repoName === getSearchRepo[e.target.id].repoName
       );
+      console.log(addData);
       // console.log(repoLength);
       if (repoLength.length < 4) {
         if (repoLength.length > 0) {

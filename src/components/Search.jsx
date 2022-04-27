@@ -33,7 +33,6 @@ const Search = ({ setIsLoading }) => {
           const fullName = el.full_name.split("/");
           return { userID: fullName[0], repoName: fullName[1] };
         });
-        // console.log(result);
         if (result.length === 0) {
           dispatch(THIRD_MODAL());
         }
@@ -43,15 +42,15 @@ const Search = ({ setIsLoading }) => {
       })
       .catch((error) => {
         if (error.response.status >= 400) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
           dispatch(CLIENT_ERROR_MODAL());
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
         } else if (error.response.status >= 500) {
-          dispatch(SERVER_ERROR_MODAL());
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
+          dispatch(SERVER_ERROR_MODAL());
         }
       });
   };
