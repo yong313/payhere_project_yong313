@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,21 +18,29 @@ const RightBox = () => {
     }
   }, [dispatch]);
 
-  const handleDltClick = (e) => {
-    e.stopPropagation();
-    const target = e.target.id;
-    let leftData = addRepositories.filter((current, i) => Number(target) !== i);
-    dispatch(DELETE_DATA(leftData));
-    // console.log(leftData);
-    setLocalStorage("savedRepo", leftData);
-  };
+  const handleDltClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const target = e.target.id;
+      let leftData = addRepositories.filter(
+        (current, i) => Number(target) !== i
+      );
+      dispatch(DELETE_DATA(leftData));
+      // console.log(leftData);
+      setLocalStorage("savedRepo", leftData);
+    },
+    [addRepositories, dispatch]
+  );
 
-  const handleSetLocalStorage = (e, idx) => {
-    const target = Number(idx);
-    const clickedData = addRepositories[target];
-    setLocalStorage("selectedRepos", clickedData);
-    navigate("/issue");
-  };
+  const handleSetLocalStorage = useCallback(
+    (e, idx) => {
+      const target = Number(idx);
+      const clickedData = addRepositories[target];
+      setLocalStorage("selectedRepos", clickedData);
+      navigate("/issue");
+    },
+    [addRepositories, navigate]
+  );
 
   return (
     <>
@@ -40,14 +48,14 @@ const RightBox = () => {
         <Title titleColor={titleColor.length > 0}>저장 Repository 🎁</Title>
         <ListContainer>
           {addRepositories &&
-            addRepositories.map((repo, index) => {
+            addRepositories.map((repo, idx) => {
               return (
                 <SelectRpository
                   key={`${repo.userID}|${repo.repoName}`}
                   repo={repo}
-                  id={index}
+                  id={idx}
                   handleDltClick={(e) => handleDltClick(e)}
-                  handleSetLocalStorage={(e) => handleSetLocalStorage(e, index)}
+                  handleSetLocalStorage={(e) => handleSetLocalStorage(e, idx)}
                   button={"Delete"}
                   selectRepo
                 />

@@ -57,13 +57,13 @@ const Pagination = React.memo(function Pagination({
             Math.floor((currentIndex - 1) / 10) * 10,
             (Math.floor((currentIndex - 1) / 10) + 1) * 10
           )
-          .map((pIndex, idx) => {
+          .map((pIndex) => {
             return pIndex === currentIndex ? (
-              <li key={idx} className="active" onClick={clickEventHandler}>
+              <li key={pIndex} className="active" onClick={clickEventHandler}>
                 {pIndex}
               </li>
             ) : (
-              <li key={idx} onClick={clickEventHandler}>
+              <li key={pIndex} onClick={clickEventHandler}>
                 {pIndex}
               </li>
             );
